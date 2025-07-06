@@ -22,8 +22,8 @@ const Navbar = () => {
         
         <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Home</Link>
         <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/movies" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Movies</Link>
-        <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Theaters</Link>
-        <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Releases</Link>
+        <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/theaters" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Theaters</Link>
+        <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/releases" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Releases</Link>
         <Link onClick={() => {scrollTo(0,0), setIsOpen(false)}} to="/favorite" className="hidden md:inline-block px-4 py-2 text-lg font-medium hover:bg-gray-200 rounded">Favorites</Link>
       </div>
 

@@ -1,54 +1,29 @@
 import axios from "axios";
 
+const axiosInstance = axios.create({
+  baseURL: "https://api.themoviedb.org/3",
+  headers: {
+    accept: "application/json",
+    Authorization:
+    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMWQ3YjQ2ZTVlOTBkYWIwZDkzM2RiOWI4NTE3NzkzZiIsIm5iZiI6MTc1MTYzMDE4My45MjEsInN1YiI6IjY4NjdjMTY3NTNkZTNkMjc0ODliMzM4MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KKbMYRYhIMSs03mZ_ilJyoMuz0bMmK605MN0wFMYhUo",
+  },
+})
 
-const API_KEY = "b1d7b46e5e90dab0d933db9b8517793f"; // ← Ganti dengan API key milikmu
-const BASE_URL = "https://api.themoviedb.org/3";
+export const topRatedUrl = "/movie/top_rated?language=en-US&page=1"
+export const upcomingUrl = "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_release_type=2|3&release_date.gte=${toDateString(min_date)}&release_date.lte=${toDateString(today)}"
 
-// Fetch movie populer
-export const fetchPopularMovies = async () => {
+export const FetchMovies = async (urlPath, setLoading, setMovies) => {
+  setLoading(true)
   try {
-    const response = await axios.get(`${BASE_URL}/movie/popular`, {
-      params: {
-        api_key: API_KEY,
-        language: "en-US",
-        page: 1,
-      },
-    });
-    return response.data.results;
+    const response = await axiosInstance.get(urlPath)
+    console.log(response.data)
+    setMovies(response.data.results || [])
   } catch (error) {
-    console.error("Failed to fetch popular movies:", error);
-    return [];
+    console.error("Error fetching movies:", error)
+    setMovies([]) // Clear movies on error
+  } finally {
+    setLoading(false)
   }
-};
+}
 
-// Fetch detail movie berdasarkan ID
-export const fetchMovieDetail = async (movieId) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/movie/${movieId}`, {
-      params: {
-        api_key: API_KEY,
-        language: "en-US",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch movie detail:", error);
-    return null;
-  }
-};
 
-// Search movie berdasarkan query
-export const searchMovies = async (query) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/search/movie`, {
-      params: {
-        api_key: API_KEY,
-        query,
-      },
-    });
-    return response.data.results;
-  } catch (error) {
-    console.error("Failed to search movies:", error);
-    return [];
-  }
-};
