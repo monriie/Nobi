@@ -11,7 +11,7 @@ import Favorite from './pages/Favorite'
 import Footer from './components/Footer'
 
 
-//https://api.themoviedb.org/3/movie/popular?api_key=b1d7b46e5e90dab0d933db9b8517793f
+//https://api.themoviedb.org/3/movie/api_key=b1d7b46e5e90dab0d933db9b8517793f
 
 const App = () => {
   return (
