@@ -1,0 +1,78 @@
+import { useEffect, useState } from "react"
+import {
+  FetchMovies,
+  topRatedUrl,
+  getGenreNames,
+  getGenresMap,
+} from "../services/FetchMovies"
+import { StarIcon } from "lucide-react"
+import { Link } from "react-router"
+
+const MovieCard = () => {
+  const [movies, setMovies] = useState([])
+  const [genresMap, setGenresMap] = useState({})
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const genres = await getGenresMap()
+        setGenresMap(genres)
+        await FetchMovies(topRatedUrl, () => {}, setMovies)
+      } catch (error) {
+        console.error("Failed to fetch movies or genres:", error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  return (
+    <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      {movies.slice(0, 8).map((movie) => {
+        const genreNames = getGenreNames(movie.genre_ids, genresMap).slice(0, 3)
+        const genreText = genreNames.join(" | ")
+        const releaseYear = movie.release_date
+          ? new Date(movie.release_date).getFullYear()
+          : "N/A"
+
+        return (
+          <article
+            key={movie.id}
+            className="flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300"
+          >
+            <Link to={`/movies/${movie.id}`}>
+              <figure className="w-full h-52 overflow-hidden rounded-lg">
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                  alt={movie.title}
+                  className="h-full w-full object-cover object-bottom cursor-pointer"
+                  loading="lazy"
+                />
+              </figure>
+
+              <h3 className="text-amber-50 font-semibold mt-2 px-2 truncate">{movie.title}</h3>
+              <p className="text-sm text-gray-400 mt-1 px-2">
+                {releaseYear} &nbsp;•&nbsp; {genreText || "No Genre"}
+              </p>
+
+              <div className="flex items-center justify-between mt-3 px-2">
+                <button
+                  type="button"
+                  className="px-4 py-2 text-xs bg-gray-300/50 hover:bg-gray-300 transition rounded-full font-medium cursor-pointer"
+                >
+                  Buy Tickets
+                </button>
+                <span className="flex items-center gap-1 text-sm text-gray-200">
+                  <StarIcon className="w-4 h-4 text-yellow-300 fill-yellow-300" />
+                  {movie.vote_average.toFixed(1)}
+                </span>
+              </div>
+            </Link>
+          </article>
+        )
+      })}
+    </section>
+  )
+}
+
+export default MovieCard
