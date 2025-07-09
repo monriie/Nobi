@@ -3,8 +3,10 @@ import React from "react"
 
 const Footer = () => {
   return (
-    <footer>
-      <p>&copy; 2025 Cinema. All rights reserved.</p>
+    <footer className="mx-20 mt-10 border-t-2 border-gray-400 rounded flex items-center justify-center">
+      <p className="p-5 text-center text-sm text-gray-700 dark:text-gray-300">
+        &copy; 2025 Nobi. All rights reserved.
+      </p>
     </footer>
   )
 }

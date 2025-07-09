@@ -4,11 +4,10 @@ import Featured from '../components/Featured'
 
 const Home = () => {
   return (
-    <div className='mx-auto'>
+    <main className='mx-auto'>
       <Hero/>
       <Featured />
-
-    </div>
+    </main>
   )
 }
 

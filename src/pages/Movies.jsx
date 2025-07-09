@@ -1,21 +1,19 @@
-import { useEffect, useState } from 'react'
-import { FetchMovies } from '../services/FetchMovies'
-import Search from '../components/Search'
-import Loading from '../services/Loading'
+import React, { useState } from "react"
+import Loading from "../services/Loading"
+import MovieCard from "../components/MovieCard"
 
-export default function Movies() {
-  const [movies, setMovies] = useState([])
+const Movies = () => {
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-   FetchMovies().then(setMovies)
-  }, [])
+  if (loading) {
+    return <Loading />
+  }
 
   return (
-    <div className="container mx-auto">
-      <Search onResults={setMovies} />
-      <div className="flex flex-wrap justify-center">
-        {movies.map(movie => <MovieCard key={movie.id} movie={movie} />)}
-      </div>
-    </div>
-  );
+    <section className="mt-25 md:px-16 lg:px-24 xl:px-35 overflow-hidden">
+      <MovieCard />
+    </section>
+  )
 }
+
+export default Movies

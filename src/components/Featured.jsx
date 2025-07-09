@@ -24,7 +24,7 @@ const Featured = ({ title = "Popular Movies" }) => {
       </div>
 
       {/* Komponen daftar film */}
-      <MovieCard />
+      <MovieCard limit={8} />
     </section>
   )
 }

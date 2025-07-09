@@ -8,7 +8,7 @@ import {
 import { StarIcon } from "lucide-react"
 import { Link } from "react-router"
 
-const MovieCard = () => {
+const MovieCard = ({ limit = null }) => {
   const [movies, setMovies] = useState([])
   const [genresMap, setGenresMap] = useState({})
 
@@ -26,9 +26,12 @@ const MovieCard = () => {
     fetchData()
   }, [])
 
+  // Potong berdasarkan limit unutk bedain preview di featured sama Movie page
+  const displayedMovies = limit ? movies.slice(0, limit) : movies
+
   return (
     <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {movies.slice(0, 8).map((movie) => {
+      {displayedMovies.map((movie) => {
         const genreNames = getGenreNames(movie.genre_ids, genresMap).slice(0, 3)
         const genreText = genreNames.join(" | ")
         const releaseYear = movie.release_date
