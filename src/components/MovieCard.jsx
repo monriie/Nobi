@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import {
   FetchMovies,
-  topRatedUrl,
+  now_playing,
   getGenreNames,
   getGenresMap,
 } from "../services/FetchMovies"
@@ -17,7 +17,7 @@ const MovieCard = ({ limit = null }) => {
       try {
         const genres = await getGenresMap()
         setGenresMap(genres)
-        await FetchMovies(topRatedUrl, () => {}, setMovies)
+        await FetchMovies(now_playing, () => {}, setMovies)
       } catch (error) {
         console.error("Failed to fetch movies or genres:", error)
       }
@@ -55,7 +55,7 @@ const MovieCard = ({ limit = null }) => {
 
               <h3 className="text-amber-50 font-semibold mt-2 px-2 truncate">{movie.title}</h3>
               <p className="text-sm text-gray-400 mt-1 px-2">
-                {releaseYear} &nbsp;•&nbsp; {genreText || "No Genre"}
+                {releaseYear} • {genreText || "No Genre"}
               </p>
 
               <div className="flex items-center justify-between mt-3 px-2">

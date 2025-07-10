@@ -45,14 +45,12 @@ const Hero = () => {
 
     intervalRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % movies.length)
-    }, 3000)
+    }, 5000)
 
     return () => clearInterval(intervalRef.current)
   }, [movies])
 
-  if (loading) {
-    return <Loading />
-  }
+  if (loading) return <Loading />
 
   return (
     <section className="w-full h-full">

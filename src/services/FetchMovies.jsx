@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   },
 })
 
-export const topRatedUrl = "/movie/top_rated?language=en-US&page=1"
+export const now_playing = "/movie/now_playing?language=en-US&page=1"
 export const upcomingUrl = "/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_release_type=2|3"
 
 export const FetchMovies = async (urlPath, setLoading, setMovies) => {
