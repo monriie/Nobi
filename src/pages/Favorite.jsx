@@ -1,8 +1,14 @@
+import React, { useContext } from "react"
 import { ThemeContext } from "@/context/ThemeContext"
-import { useContext } from "react"
 
-export default function Favorite() {
+const Favorite = () => {
   const {theme} = useContext(ThemeContext)
 
-  return <div className={`${theme} pt-25 p-6 text-slate-900`}>Your favorite movies will appear here.</div>
+  return (
+    <div className={`${theme}`}>
+      <h1 className="h-[92vh] flex items-center justify-center dark:text-white font-medium">Your favorite movies will appear here.</h1>
+    </div>
+  )
 }
+
+export default Favorite

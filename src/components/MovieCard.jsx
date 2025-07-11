@@ -32,7 +32,7 @@ const MovieCard = ({ limit = null }) => {
   return (
     <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       {displayedMovies.map((movie) => {
-        const genreNames = getGenreNames(movie.genre_ids, genresMap).slice(0, 3)
+        const genreNames = getGenreNames(movie.genre_ids, genresMap).slice(0, 2)
         const genreText = genreNames.join(" | ")
         const releaseYear = movie.release_date
           ? new Date(movie.release_date).getFullYear()
