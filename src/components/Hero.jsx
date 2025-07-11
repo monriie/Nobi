@@ -21,7 +21,6 @@ const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
   const intervalRef = useRef(null)
 
-  // Fetch movies and genres on component mount
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
@@ -39,7 +38,6 @@ const Hero = () => {
     fetchData()
   }, [])
 
-  // Auto-slide every 3 seconds
   useEffect(() => {
     if (movies.length === 0) return
 
@@ -74,27 +72,29 @@ const Hero = () => {
                     backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
                   }}
                 >
-                  <h1 className="text-5xl md:text-[70px] md:leading-[1.2] font-semibold max-w-4xl text-white">
+                  <h1 className="text-5xl md:text-[70px] md:leading-[1.2] font-semibold max-w-4xl text-white drop-shadow-lg">
                     {movie.title}
                   </h1>
 
-                  <div className="flex items-center gap-6 text-gray-300 mt-4">
-                    <span className="bg-white/10 px-2 py-1 rounded text-sm">
+                  <div className="flex items-center gap-6 text-white mt-4">
+                    <span className="bg-white/10 dark:bg-purple-600/30 px-2 py-1 rounded text-sm">
                       {genreText || "No Genre"}
                     </span>
 
                     <div className="flex items-center gap-2">
-                      <CalendarIcon className="w-4 h-4" />
-                      <span className="text-sm">{movie.release_date}</span>
+                      <CalendarIcon className="dark:text-white/90 w-4 h-4" />
+                      <span className="dark:text-white/90 text-sm">{movie.release_date}</span>
                     </div>
                   </div>
 
-                  <p className="max-w-md text-gray-300 text-justify my-4 mb-6">
+                  <p className="max-w-md text-gray-100 text-justify my-4 mb-6 drop-shadow-md">
                     {movie.overview}
                   </p>
 
                   <Link to="/movies">
-                    <button className="flex items-center gap-1 px-6 py-3 text-amber-50 text-sm bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer">
+                    <button className="flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-full transition
+                      text-white bg-gray-700 hover:bg-purple-800
+                      dark:bg-purple-900/80 dark:hover:bg-purple-800/50 dark:text-white">
                       Explore movies
                       <ArrowRight className="w-5 h-5" />
                     </button>

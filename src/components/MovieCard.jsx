@@ -8,6 +8,7 @@ import {
 import { StarIcon } from "lucide-react"
 import { Link } from "react-router"
 
+
 const MovieCard = ({ limit = null }) => {
   const [movies, setMovies] = useState([])
   const [genresMap, setGenresMap] = useState({})
@@ -26,7 +27,6 @@ const MovieCard = ({ limit = null }) => {
     fetchData()
   }, [])
 
-  // Potong berdasarkan limit unutk bedain preview di featured sama Movie page
   const displayedMovies = limit ? movies.slice(0, limit) : movies
 
   return (
@@ -41,7 +41,9 @@ const MovieCard = ({ limit = null }) => {
         return (
           <article
             key={movie.id}
-            className="flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300"
+            className="flex flex-col justify-between p-3 rounded-2xl transition duration-300 hover:-translate-y-1
+                       bg-gray-200/60 text-slate-800
+                       dark:bg-slate-800 dark:text-white"
           >
             <Link to={`/movies/${movie.id}`}>
               <figure className="w-full h-52 overflow-hidden rounded-lg">
@@ -53,20 +55,24 @@ const MovieCard = ({ limit = null }) => {
                 />
               </figure>
 
-              <h3 className="text-amber-50 font-semibold mt-2 px-2 truncate">{movie.title}</h3>
-              <p className="text-sm text-gray-400 mt-1 px-2">
+              <h3 className="font-semibold mt-2 px-2 truncate text-slate-900 dark:text-white">
+                {movie.title}
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 px-2">
                 {releaseYear} • {genreText || "No Genre"}
               </p>
 
               <div className="flex items-center justify-between mt-3 px-2">
                 <button
                   type="button"
-                  className="px-4 py-2 text-xs bg-gray-300/50 hover:bg-gray-300 transition rounded-full font-medium cursor-pointer"
+                  className="px-4 py-2 text-xs rounded-full font-medium cursor-pointer transition
+                             bg-gray-400/50 hover:bg-gray-300 text-gray-800
+                             dark:bg-purple-300/40 dark:hover:bg-purple-200/60 dark:text-white"
                 >
                   Buy Tickets
                 </button>
-                <span className="flex items-center gap-1 text-sm text-gray-200">
-                  <StarIcon className="w-4 h-4 text-yellow-300 fill-yellow-300" />
+                <span className="flex items-center gap-1 text-sm text-yellow-500 dark:text-yellow-300">
+                  <StarIcon className="w-4 h-4 fill-current" />
                   {movie.vote_average.toFixed(1)}
                 </span>
               </div>

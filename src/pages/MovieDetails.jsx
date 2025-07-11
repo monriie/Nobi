@@ -7,8 +7,7 @@ import {
 } from "../services/FetchMovies"
 import { StarIcon, Heart } from "lucide-react"
 import Loading from "../services/Loading"
-import { ThemeContext } from "../context/ThemeContext"
-// import DateSelect from "../components/DateSelect"
+import { ThemeContext } from "@/context/ThemeContext"
 
 const MovieDetail = () => {
   const { id } = useParams()
@@ -53,19 +52,19 @@ const MovieDetail = () => {
     : "N/A"
 
   return (
-    <main
-      className={`mt-20 px-6 md:px-16 lg:px-40 pt-10 transition-colors duration-500 ${
-        theme
-      }`}
-    >
+    <main className={`${theme} pt-30 px-6 md:px-16 lg:px-40 transition-colors duration-500`}>
       <section className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
           className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover"
         />
+
         <div className="flex flex-col gap-3">
-          <h1 className="text-4xl font-medium max-w-96">{movie.title}</h1>
+          <h1 className="text-4xl font-medium max-w-96 text-slate-800 dark:text-white">
+            {movie.title}
+          </h1>
+
           <div className="flex items-center gap-2 text-gray-500 dark:text-gray-300">
             <StarIcon className="w-5 h-5 text-yellow-400 fill-yellow-400" />
             {movie.vote_average?.toFixed(1)} User Rating
@@ -87,13 +86,16 @@ const MovieDetail = () => {
             >
               Add to Watchlist
             </button>
+
             <Link
               to="#dateSelect"
               className="px-10 py-3 text-sm font-medium rounded-md active:scale-95 transition
-              bg-primary text-white hover:bg-primary/90"
+              bg-purple-700 hover:bg-purple-800 text-white
+              dark:bg-purple-900 dark:hover:bg-purple-700"
             >
               Buy Tickets
             </Link>
+
             <button
               className="p-2.5 rounded-full active:scale-95 transition
               bg-gray-300 hover:bg-gray-400 text-black
@@ -107,8 +109,8 @@ const MovieDetail = () => {
 
       {/* Movie Cast */}
       {movie.cast?.length > 0 && (
-        <section className="mt-12">
-          <h2 className="text-xl font-semibold mb-4">Movie Cast</h2>
+        <section className="py-12">
+          <h2 className="text-xl font-semibold mb-4 text-slate-800 dark:text-white">Movie Cast</h2>
           <div className="overflow-x-auto no-scrollbar pb-4">
             <div className="flex items-center gap-6 px-2 w-max">
               {movie.cast.slice(0, 20).map((cast, index) => (
@@ -125,7 +127,9 @@ const MovieDetail = () => {
                     alt={cast.name}
                     className="rounded-full h-20 w-20 object-cover"
                   />
-                  <p className="font-medium text-xs mt-2 truncate w-[80px]">{cast.name}</p>
+                  <p className="font-medium text-xs mt-2 truncate w-[80px] text-gray-700 dark:text-gray-300">
+                    {cast.name}
+                  </p>
                 </div>
               ))}
             </div>

@@ -1,17 +1,14 @@
-import React, { useState, useContext } from "react"
-import Loading from "../services/Loading"
+import React, { useContext } from "react"
 import MovieCard from "../components/MovieCard"
-import { ThemeContext } from "../context/ThemeContext"
+import { ThemeContext } from "@/context/ThemeContext"
+
 
 const Movies = () => {
-  const [loading, setLoading] = useState(false)
   const { theme } = useContext(ThemeContext)
-
-  if (loading) return <Loading />
 
   return (
     <section
-      className={`mt-25 md:px-16 lg:px-24 xl:px-35 overflow-hidden transition-colors duration-500 ${
+      className={`pt-25 pb-10 md:px-16 lg:px-24 xl:px-35 overflow-hidden transition-colors duration-500 ${
         theme}`}
     >
       <MovieCard />

@@ -1,5 +1,5 @@
 import * as React from "react"
-import useEmblaCarousel from "embla-carousel-react";
+import useEmblaCarousel from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -70,7 +70,7 @@ function Carousel({
 
     return () => {
       api?.off("select", onSelect)
-    };
+    }
   }, [api, onSelect])
 
   return (
@@ -96,7 +96,7 @@ function Carousel({
         {children}
       </div>
     </CarouselContext.Provider>
-  );
+  )
 }
 
 function CarouselContent({
@@ -118,7 +118,7 @@ function CarouselContent({
         )}
         {...props} />
     </div>
-  );
+  )
 }
 
 function CarouselItem({
@@ -138,7 +138,7 @@ function CarouselItem({
         className
       )}
       {...props} />
-  );
+  )
 }
 
 function CarouselPrevious({
@@ -163,7 +163,7 @@ function CarouselPrevious({
       <ArrowLeft />
       <span className="sr-only">Previous slide</span>
     </Button>
-  );
+  )
 }
 
 function CarouselNext({
@@ -188,7 +188,7 @@ function CarouselNext({
       <ArrowRight />
       <span className="sr-only">Next slide</span>
     </Button>
-  );
+  )
 }
 
-export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+export { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }
