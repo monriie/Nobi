@@ -23,7 +23,7 @@ const Navbar = () => {
       {/* Logo */}
       <div className="flex items-center gap-5">
         <img src={Logo} alt="Nobi Logo" className="w-10 h-auto" />
-        <span className="text-4xl font-bold text-purple-600">Nobi.</span>
+        <span className="text-4xl font-bold text-purple-900">Nobi.</span>
       </div>
 
       {/* Navigation links */}
@@ -67,7 +67,7 @@ const Navbar = () => {
       {/* Action buttons */}
       <div className="hidden md:flex items-center gap-6">
         <SearchIcon className="w-6 h-6 text-white cursor-pointer" />
-        <button className="px-4 py-1 sm:px-7 sm:py-2 bg-black/70 text-white dark:bg-purple-600 transition rounded-full font-medium cursor-pointer">
+        <button className="px-4 py-1 sm:px-7 sm:py-2 bg-black/70 text-white dark:bg-purple-900 transition rounded-full font-medium cursor-pointer">
           Login
         </button>
         <ToggleButton />
