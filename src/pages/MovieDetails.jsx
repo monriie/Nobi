@@ -5,9 +5,10 @@ import {
   getGenresMap,
   getMovieDetail,
 } from "../services/FetchMovies"
-import { StarIcon, Heart } from "lucide-react"
+import { StarIcon, Heart, Check, Plus } from "lucide-react"
 import Loading from "../services/Loading"
 import { ThemeContext } from "@/context/ThemeContext"
+import toast from "react-hot-toast"
 
 const MovieDetail = () => {
   const { id } = useParams()
@@ -15,6 +16,8 @@ const MovieDetail = () => {
   const [movie, setMovie] = useState(null)
   const [genresMap, setGenresMap] = useState({})
   const [loading, setLoading] = useState(true)
+  const [isInWatchlist, setIsInWatchlist] = useState(false)
+  const [isInFavorites, setIsInFavorites] = useState(false)
 
   const timeFormat = (mins) => {
     if (!mins) return "N/A"
@@ -22,6 +25,17 @@ const MovieDetail = () => {
     const m = mins % 60
     return `${h}h ${m}m`
   }
+
+  // Check apakah movie sudah ada di watchlist/favorites
+  useEffect(() => {
+    if (!movie) return
+    
+    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    
+    setIsInWatchlist(watchlist.some(item => item.id === movie.id))
+    setIsInFavorites(favorites.some(item => item.id === movie.id))
+  }, [movie])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +55,38 @@ const MovieDetail = () => {
 
     fetchData()
   }, [id])
+
+  const addToWatchlist = () => {
+    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
+    const exists = watchlist.find(item => item.id === movie.id)
+    
+    if (!exists) {
+      const newWatchlist = [...watchlist, movie]
+      localStorage.setItem('watchlist', JSON.stringify(newWatchlist))
+      setIsInWatchlist(true)
+      toast.success('Added to watchlist!')
+    } else {
+      toast.info('Already in watchlist')
+    }
+  }
+
+  const addToFavorites = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
+    const exists = favorites.find(item => item.id === movie.id)
+    
+    if (!exists) {
+      const newFavorites = [...favorites, movie]
+      localStorage.setItem('favorites', JSON.stringify(newFavorites))
+      setIsInFavorites(true)
+      toast.success('Added to favorites!')
+    } else {
+      // Remove from favorites
+      const filtered = favorites.filter(item => item.id !== movie.id)
+      localStorage.setItem('favorites', JSON.stringify(filtered))
+      setIsInFavorites(false)
+      toast.success('Removed from favorites!')
+    }
+  }
 
   if (loading || !movie) return <Loading />
 
@@ -79,13 +125,15 @@ const MovieDetail = () => {
           </p>
 
           <div className="flex items-center flex-wrap gap-4 mt-4">
-            <button onClick={() => addToWatchlist(movie.id)}
+            <button 
+              onClick={addToWatchlist}
+              disabled={isInWatchlist}
               className="flex items-center gap-2 px-7 py-3 text-sm font-medium rounded-md active:scale-95 transition
-              bg-gray-200 text-black hover:bg-gray-300
+              bg-gray-200 text-black hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed
               dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700" 
-              
             >
-              Add to Watchlist
+              {isInWatchlist ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+              {isInWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
             </button>
 
             <Link
@@ -98,12 +146,14 @@ const MovieDetail = () => {
             </Link>
 
             <button
-              onClick={() => addToFavorites(movie.id)}
-              className="p-2.5 rounded-full active:scale-95 transition
-              bg-gray-300 hover:bg-gray-400 text-black
-              dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white"
+              onClick={addToFavorites}
+              className={`p-2.5 rounded-full active:scale-95 transition
+              ${isInFavorites 
+                ? 'bg-red-500 hover:bg-red-600 text-white' 
+                : 'bg-gray-300 hover:bg-gray-400 text-black dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white'
+              }`}
             >
-              <Heart className="w-5 h-5" />
+              <Heart className={`w-5 h-5 ${isInFavorites ? 'fill-current' : ''}`} />
             </button>
           </div>
         </div>
