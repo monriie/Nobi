@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Movies from './pages/Movies'
 import MovieDetails from './pages/MovieDetails'
 import Favorite from './pages/Favorite'
+import Watchlist from './pages/Watchlist'
 import Footer from './components/Footer'
 
 const App = () => {
@@ -20,6 +21,9 @@ const App = () => {
           <Route path=":id" element={<MovieDetails />} />
         </Route>
         <Route path='/favorite' element={<Favorite />} />
+        <Route path='/watchlist' element={<Watchlist />}>
+          <Route path=":id" element={<MovieDetails />} />
+        </Route>
       </Routes>
       <Footer />
       

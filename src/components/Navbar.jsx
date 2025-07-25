@@ -48,13 +48,8 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link onClick={scrollToTop} to="/theaters" className="px-4 py-2 text-lg font-medium dark:text-white">
-            Theaters
-          </Link>
-        </li>
-        <li>
-          <Link onClick={scrollToTop} to="/releases" className="px-4 py-2 text-lg font-medium dark:text-white">
-            Releases
+          <Link onClick={scrollToTop} to="/watchlist" className="px-4 py-2 text-lg font-medium dark:text-white">
+            WatchList
           </Link>
         </li>
         <li>

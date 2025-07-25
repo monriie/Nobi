@@ -53,20 +53,20 @@ export const getMovieDetail = async (id) => {
           Authorization: `Bearer ${import.meta.env.VITE_TMDB_ACCESS_TOKEN}`,
         },
       }
-    );
+    )
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const data = await response.json();
+    const data = await response.json()
 
     return {
       ...data,
       cast: data.credits?.cast || [],
-    };
+    }
   } catch (error) {
-    console.error("Failed to fetch movie detail:", error);
-    return null;
+    console.error("Failed to fetch movie detail:", error)
+    return null
   }
-};
+}

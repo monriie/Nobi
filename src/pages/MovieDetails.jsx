@@ -79,10 +79,11 @@ const MovieDetail = () => {
           </p>
 
           <div className="flex items-center flex-wrap gap-4 mt-4">
-            <button
+            <button onClick={() => addToWatchlist(movie.id)}
               className="flex items-center gap-2 px-7 py-3 text-sm font-medium rounded-md active:scale-95 transition
               bg-gray-200 text-black hover:bg-gray-300
-              dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+              dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700" 
+              
             >
               Add to Watchlist
             </button>
@@ -97,6 +98,7 @@ const MovieDetail = () => {
             </Link>
 
             <button
+              onClick={() => addToFavorites(movie.id)}
               className="p-2.5 rounded-full active:scale-95 transition
               bg-gray-300 hover:bg-gray-400 text-black
               dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white"
