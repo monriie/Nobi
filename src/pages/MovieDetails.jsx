@@ -29,12 +29,12 @@ const MovieDetail = () => {
   // Check apakah movie sudah ada di watchlist/favorites
   useEffect(() => {
     if (!movie) return
-    
-    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-    
-    setIsInWatchlist(watchlist.some(item => item.id === movie.id))
-    setIsInFavorites(favorites.some(item => item.id === movie.id))
+
+    const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]")
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+
+    setIsInWatchlist(watchlist.some((item) => item.id === movie.id))
+    setIsInFavorites(favorites.some((item) => item.id === movie.id))
   }, [movie])
 
   useEffect(() => {
@@ -57,40 +57,45 @@ const MovieDetail = () => {
   }, [id])
 
   const addToWatchlist = () => {
-    const watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
-    const exists = watchlist.find(item => item.id === movie.id)
-    
+    const watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]")
+    const exists = watchlist.find((item) => item.id === movie.id)
+
     if (!exists) {
+      // array watchlist baru
       const newWatchlist = [...watchlist, movie]
-      localStorage.setItem('watchlist', JSON.stringify(newWatchlist))
+      localStorage.setItem("watchlist", JSON.stringify(newWatchlist))
       setIsInWatchlist(true)
-      toast.success('Added to watchlist!')
+      toast.success("Added to watchlist!")
     } else {
-      toast.info('Already in watchlist')
+      // array watchlist baru setelah movie baru di hapus
+      const filtered = watchlist.filter(item => item.id !== movie.id)
+      localStorage.setItem("watchlist", JSON.stringify(filtered))
+      setIsInWatchlist(false)
+      toast.success("Removed from watchlist")
     }
   }
 
   const addToFavorites = () => {
-    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-    const exists = favorites.find(item => item.id === movie.id)
-    
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]")
+    const exists = favorites.find((item) => item.id === movie.id)
+
     if (!exists) {
       const newFavorites = [...favorites, movie]
-      localStorage.setItem('favorites', JSON.stringify(newFavorites))
+      localStorage.setItem("favorites", JSON.stringify(newFavorites))
       setIsInFavorites(true)
-      toast.success('Added to favorites!')
+      toast.success("Added to favorites!")
     } else {
       // Remove from favorites
       const filtered = favorites.filter(item => item.id !== movie.id)
-      localStorage.setItem('favorites', JSON.stringify(filtered))
+      localStorage.setItem("favorites", JSON.stringify(filtered))
       setIsInFavorites(false)
-      toast.success('Removed from favorites!')
+      toast.success("Removed from favorites!")
     }
   }
 
   if (loading || !movie) return <Loading />
 
-  const genreIds = movie.genre_ids || movie.genres?.map(g => g.id) || []
+  const genreIds = movie.genre_ids || movie.genres?.map((g) => g.id) || []
   const genreNames = getGenreNames(genreIds, genresMap)
   const genreText = genreNames.join(" | ")
   const releaseYear = movie.release_date
@@ -98,7 +103,9 @@ const MovieDetail = () => {
     : "N/A"
 
   return (
-    <main className={`${theme} pt-30 px-6 md:px-16 lg:px-40 transition-colors duration-500`}>
+    <main
+      className={`${theme} pt-30 px-6 md:px-16 lg:px-40 transition-colors duration-500`}
+    >
       <section className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -121,19 +128,23 @@ const MovieDetail = () => {
           </p>
 
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            {releaseYear} • {timeFormat(movie.runtime)} • {genreText || "No Genre"}
+            {releaseYear} • {timeFormat(movie.runtime)} •{" "}
+            {genreText || "No Genre"}
           </p>
 
           <div className="flex items-center flex-wrap gap-4 mt-4">
-            <button 
+            <button
               onClick={addToWatchlist}
-              disabled={isInWatchlist}
               className="flex items-center gap-2 px-7 py-3 text-sm font-medium rounded-md active:scale-95 transition
               bg-gray-200 text-black hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed
-              dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700" 
+              dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
             >
-              {isInWatchlist ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-              {isInWatchlist ? 'In Watchlist' : 'Add to Watchlist'}
+              {isInWatchlist ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+              {isInWatchlist ? "In Watchlist" : "Add to Watchlist"}
             </button>
 
             <Link
@@ -148,12 +159,15 @@ const MovieDetail = () => {
             <button
               onClick={addToFavorites}
               className={`p-2.5 rounded-full active:scale-95 transition
-              ${isInFavorites 
-                ? 'bg-red-500 hover:bg-red-600 text-white' 
-                : 'bg-gray-300 hover:bg-gray-400 text-black dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white'
+              ${
+                isInFavorites
+                  ? "bg-red-500 hover:bg-red-600 text-white"
+                  : "bg-gray-300 hover:bg-gray-400 text-black dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white"
               }`}
             >
-              <Heart className={`w-5 h-5 ${isInFavorites ? 'fill-current' : ''}`} />
+              <Heart
+                className={`w-5 h-5 ${isInFavorites ? "fill-current" : ""}`}
+              />
             </button>
           </div>
         </div>
@@ -162,7 +176,9 @@ const MovieDetail = () => {
       {/* Movie Cast */}
       {movie.cast?.length > 0 && (
         <section className="py-12">
-          <h2 className="text-xl font-semibold mb-4 text-slate-800 dark:text-white">Movie Cast</h2>
+          <h2 className="text-xl font-semibold mb-4 text-slate-800 dark:text-white">
+            Movie Cast
+          </h2>
           <div className="overflow-x-auto no-scrollbar pb-4">
             <div className="flex items-center gap-6 px-2 w-max">
               {movie.cast.slice(0, 20).map((cast, index) => (

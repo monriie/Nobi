@@ -22,7 +22,7 @@ const Watchlist = () => {
 
   // Function untuk remove dari watchlist
   const removeFromWatchlist = (movieId) => {
-    setWatchlist(prev => prev.filter(movie => movie.id !== movieId))
+    setWatchlist(prev => prev.filter(item => item.id !== movieId))
   }
 
   return (
