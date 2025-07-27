@@ -1,9 +1,35 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { ArrowRight } from "lucide-react"
 import { Link } from "react-router"
 import MovieCard from "./MovieCard"
+import {
+  FetchMovies,
+  now_playing,
+  getGenresMap,
+} from "../services/FetchMovies"
 
 const Featured = ({ title = "Now Playing" }) => {
+  const [movies, setMovies] = useState([])
+  const [genresMap, setGenresMap] = useState({})
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const genres = await getGenresMap()
+        setGenresMap(genres)
+        await FetchMovies(now_playing, () => {}, setMovies)
+      } catch (error) {
+        console.error("Failed to fetch movies or genres:", error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const limit = 8
+  const displayedMovies = limit ? movies.slice(0, limit) : movies
+
   return (
     <section className="px-3 md:px-16 lg:px-24 xl:px-35 overflow-hidden py-10">
       <div className="flex justify-between items-center pt-15 pb-5">
@@ -22,7 +48,7 @@ const Featured = ({ title = "Now Playing" }) => {
       </div>
 
       {/* Komponen daftar film */}
-      <MovieCard limit={8} />
+      <MovieCard movies={displayedMovies} genresMap={genresMap} />
     </section>
   )
 }
